@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 namespace TextHandler {
     public class Word  {
         public string WordInString { get; set; }
-        public char Punctuation { get; private set; }
+        public char[] Punctuation { get; private set; }
         public int Length { get; }
 
         protected Word() {
@@ -18,10 +18,7 @@ namespace TextHandler {
         }
 
         private void DeterminePunctuation () {
-            var regex = new Regex(@"\W$", RegexOptions.Compiled);
-            if (regex.IsMatch(WordInString)) {
-                Punctuation = WordInString[WordInString.Length - 1];
-            }
+            Punctuation = Regex.Match(WordInString, @"[\.\!\?]+").ToString().ToCharArray();
         }
         
         public override string ToString() {

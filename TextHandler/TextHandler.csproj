@@ -38,6 +38,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concordance.cs" />
+    <Compile Include="ExtensionsString.cs" />
+    <Compile Include="Punctuation.cs" />
+    <Compile Include="TextParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sentence.cs" />
