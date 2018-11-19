@@ -38,15 +38,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Concordance.cs" />
-    <Compile Include="ExtensionsString.cs" />
-    <Compile Include="Punctuation.cs" />
-    <Compile Include="TextParser.cs" />
+    <Compile Include="Concordance\Concordance.cs" />
+    <Compile Include="Concordance\ConcordanceWord.cs" />
+    <Compile Include="Extensions\ExtensionsString.cs" />
+    <Compile Include="Parser\TextParser.cs" />
+    <Compile Include="TextModules\IText.cs" />
+    <Compile Include="TextModules\Punctuation.cs" />
+    <Compile Include="TextModules\Sentence.cs" />
+    <Compile Include="TextModules\Text.cs" />
+    <Compile Include="TextModules\Word.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sentence.cs" />
-    <Compile Include="Text.cs" />
-    <Compile Include="Word.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

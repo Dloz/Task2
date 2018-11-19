@@ -1,12 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using TextHandler.Extensions;
 
-namespace TextHandler {
+namespace TextHandler.TextModules {
     public class Sentence {
         internal List<Word> Words { get; } = new List<Word>();
-        public string Type { get; private set; }
+        public string[] Type { get; private set; } = new List<string>().ToArray();
         public int Length { get; }
 
         public Sentence(string sentence) {
@@ -20,9 +20,20 @@ namespace TextHandler {
                     Words.Add(new Punctuation(word[word.Length - 1]));
                 }
                 else if (word.Contains('-')) {
-                    foreach (var item in word.SplitBySeparatorInTheMiddle('-')) {
+                    foreach (var item in word.SplitBySeparator('-')) {
                         Words.Add(new Word(item));
                     }
+                }
+                else if (Regex.IsMatch(word, @"[.?!]+")) {
+                    var str = Regex.Matches(word, @"[\.\!\?]+");
+                    var punctuation = new List<char>().ToArray();
+                    for (var i = word.Length - 1; i >= 0; i--) {
+                        if (word[i] == '!' || word[i] == '.' || word[i] == '?') {
+                            punctuation = punctuation.Concat(new char[] {word[i]}).ToArray();
+                        }
+                    }
+                    Words.Add(new Word(word.Trim(punctuation)));
+                    Words.Add(new Punctuation(punctuation));
                 }
                 else {
                     Words.Add(new Word(word));
@@ -32,13 +43,16 @@ namespace TextHandler {
             Length = Words.Count;
         }
 
-        private void DetermineType() { // TODO
-            if (Words.Last().Punctuation[0] == '.') {
-                Type = $"Declarative";
+        private void DetermineType() { 
+            if (Regex.IsMatch(Words.Last().ToString(),@"[\.]+")) {
+                Type = Type.Concat(new[]{$"Declarative"}).ToArray();
             }
-            else {
-                Type = Words.Last().Punctuation[0] == '?' ? "Imperative" : "Interrogative";
-           }
+            else if (Regex.IsMatch(Words.Last().WordInString,@"[\?]+")) {
+                Type = Type.Concat(new[]{$"Imperative"}).ToArray();
+            }
+            else if (Regex.IsMatch(Words.Last().WordInString,@"[\!]+")) {
+                Type = Type.Concat(new[]{$"Interrogative"}).ToArray();
+            }
         }
 
         public override string ToString() {

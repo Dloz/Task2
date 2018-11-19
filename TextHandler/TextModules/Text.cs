@@ -1,12 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
-namespace TextHandler {
+
+namespace TextHandler.TextModules {
     
     
-    public class Text {
+    public class Text: IText {
         private List<Sentence> _sortedList;
         public List<Sentence> Sentences { get; } = new List<Sentence>();        
         
@@ -32,7 +30,7 @@ namespace TextHandler {
             string[] printed = { };
             
             foreach (var item in Sentences) {
-                if (item.Type != "Imperative") continue;
+                if (!item.Type.Contains("Imperative")) continue;
                 foreach (var word in item.Words) {
                     if (word.Length != wordLength || printed.Contains(word.WordInString)) continue;
                     printed = printed.Concat(new string[] { word.WordInString }).ToArray();

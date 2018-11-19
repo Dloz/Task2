@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
-
-namespace TextHandler {
+namespace TextHandler.TextModules {
     public class Punctuation: Word {
-        public char[] Punctuations { get; set; } = {' '};
+        private char[] Punctuations { get; set; } = {' '};
 
         public Punctuation(char[] punctuations) {
             Punctuations = punctuations;

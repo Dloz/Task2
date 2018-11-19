@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace TextHandler {
+namespace TextHandler.Concordance {
  public class Concordance {
      private readonly SortedDictionary<string, ConcordanceWord> _words = new SortedDictionary<string, ConcordanceWord>();
 
@@ -32,7 +32,7 @@ namespace TextHandler {
             file.Close();
     }
 
-        private bool Add(string key, int numofstr) {
+        private bool Add(string key, int numOfString) {
             var c = new ConcordanceWord();
             if (!_words.ContainsKey(key)) {
                 _words.Add(key, new ConcordanceWord()); 
@@ -40,7 +40,7 @@ namespace TextHandler {
             }
             else {
                 _words[key].IncrCount();
-                _words[key].Add(numofstr); 
+                _words[key].Add(numOfString); 
                 return false;
             }
         }
@@ -48,49 +48,25 @@ namespace TextHandler {
 
         public Concordance(StreamReader reader) {
             var c = new ConcordanceWord();
-            var wordoftext = "";
-            var numofstring = 0;
+            var wordOfText = "";
+            var numOfString = 0;
             while ((!reader.EndOfStream)) {
                 var ch = Convert.ToChar(reader.Read());
-                wordoftext = wordoftext + ch;
-                if ((ch == '.') || (ch == '!') || (ch == '?')) numofstring++;
+                wordOfText = wordOfText + ch;
+                if ((ch == '.') || (ch == '!') || (ch == '?')) numOfString++;
                 if (
                     ((((char.IsPunctuation(ch)) || (ch == ' ')) && (ch != '#')) && (ch != '-'))
-                    && (wordoftext != " ") 
-                    && (wordoftext != "\n"))
+                    && (wordOfText != " ") 
+                    && (wordOfText != "\n"))
                 {
-                    wordoftext = wordoftext.Substring(0, wordoftext.Length - 1);
-                    wordoftext = wordoftext.ToLower();
-                    if (Add(wordoftext,numofstring)) { _words[wordoftext].Intialization(); _words[wordoftext].Add(numofstring);}
-                    wordoftext = "";
+                    wordOfText = wordOfText.Substring(0, wordOfText.Length - 1);
+                    wordOfText = wordOfText.ToLower();
+                    if (Add(wordOfText,numOfString)) { _words[wordOfText].Intialization(); _words[wordOfText].Add(numOfString);}
+                    wordOfText = "";
                 }
-                if ((wordoftext == " ") || (ch == '\n')) wordoftext = "";
+                if ((wordOfText == " ") || (ch == '\n')) wordOfText = "";
             }
         }
 
-    }
-
-    public class ConcordanceWord : Word {
-        private int Count { get; set; }
-        readonly List<int> _pageNumbers = new List<int>();
-
-        public void Add(int val) {
-            if (!_pageNumbers.Contains(val)) _pageNumbers.Add(val);
-        }
-
-        public void IncrCount() {
-            Count = Count + 1;
-        }
-
-        public void Intialization() {
-            Count = 1;
-        }
-
-        public void Output(StreamWriter file) {
-            file.Write("{0}: ", Count);
-            foreach (var i in _pageNumbers) {
-                file.Write("{0} ", i);
-            }
-        }
     }
 }

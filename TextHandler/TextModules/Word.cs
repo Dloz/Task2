@@ -1,10 +1,9 @@
-using System;
 using System.Text.RegularExpressions;
 
-namespace TextHandler {
+namespace TextHandler.TextModules {
     public class Word  {
         public string WordInString { get; set; }
-        public char[] Punctuation { get; private set; }
+        public char[] Punctuation { get; private set; } = {' '};
         public int Length { get; }
 
         protected Word() {

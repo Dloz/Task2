@@ -1,10 +1,12 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using TextHandler.TextModules;
 
-namespace TextHandler {
-    public static class TextParser {
+namespace TextHandler.Parser {
+    public static class TextParser{
         public static Text Parse(string path) {
+            if (path == null) throw new NullReferenceException();
             using (TextReader thread = new StreamReader(path)) {
                 var text = new Text();
                 var textInString = thread.ReadToEnd();
