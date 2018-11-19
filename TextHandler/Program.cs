@@ -22,6 +22,8 @@ namespace TextHandler {
                 Console.WriteLine(text.ToString());
                 Console.WriteLine();
                 Console.WriteLine(text.InAscendingOrder());
+
+                Console.WriteLine("Enter word length to print from imperative");
                 foreach (var word in text.WordsFromImperativeSentences(int.Parse(Console.ReadLine() ?? throw new InvalidOperationException()))) {
                     Console.WriteLine(word);
                 }
