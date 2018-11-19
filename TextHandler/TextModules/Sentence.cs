@@ -47,10 +47,10 @@ namespace TextHandler.TextModules {
             if (Regex.IsMatch(Words.Last().ToString(),@"[\.]+")) {
                 Type = Type.Concat(new[]{$"Declarative"}).ToArray();
             }
-            else if (Regex.IsMatch(Words.Last().WordInString,@"[\?]+")) {
+            else if (Regex.IsMatch(Words.Last().ToString(),@"[\?]+")) {
                 Type = Type.Concat(new[]{$"Imperative"}).ToArray();
             }
-            else if (Regex.IsMatch(Words.Last().WordInString,@"[\!]+")) {
+            else if (Regex.IsMatch(Words.Last().ToString(),@"[\!]+")) {
                 Type = Type.Concat(new[]{$"Interrogative"}).ToArray();
             }
         }

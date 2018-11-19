@@ -32,8 +32,8 @@ namespace TextHandler.TextModules {
             foreach (var item in Sentences) {
                 if (!item.Type.Contains("Imperative")) continue;
                 foreach (var word in item.Words) {
-                    if (word.Length != wordLength || printed.Contains(word.WordInString)) continue;
-                    printed = printed.Concat(new string[] { word.WordInString }).ToArray();
+                    if (word.Length != wordLength || printed.Contains(word.WordInString.ToLower())) continue;
+                    printed = printed.Concat(new string[] { word.WordInString.ToLower() }).ToArray();
                 }
             }
             return printed;
@@ -41,10 +41,12 @@ namespace TextHandler.TextModules {
         
         public void DeleteWords(int wordLength) { 
             foreach (var sentence in Sentences) {
-                foreach (var word in sentence.Words) {
+                foreach (var word in sentence.Words.ToList()) {
                     char[] vowels = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
-                    if (vowels.Contains(word.WordInString[0]) && word.WordInString.Length == wordLength) {
-                        sentence.Words.Remove(word);
+                    if (word.WordInString != null 
+                        && vowels.Contains(word.WordInString[0]) 
+                        && word.WordInString.Length == wordLength) {
+                            sentence.Words.Remove(word);
                     }
                 }
             }
@@ -53,7 +55,7 @@ namespace TextHandler.TextModules {
         public void ReplaceSubstring(int wordLength, string substring) { 
             foreach (var sentence in Sentences) {
                 foreach (var word in sentence.Words.ToList()) {
-                    if (word.WordInString.Length == wordLength) {
+                    if (word.WordInString != null && word.WordInString.Length == wordLength) {
                         word.WordInString = substring;
                     }
                 }
